@@ -1,29 +1,38 @@
 package main
 
 import (
+//	storage "NetPulse/Storage"
 	"bufio"
 	"fmt"
 	"os"
 	"time"
 )
 
-func menu(){
+func menu() {
 	fmt.Println("Выберите действие")
 	fmt.Println("1 - пинг сайтов")
 	fmt.Println("2 - показать отчет")
 	fmt.Println("0 - выход")
 }
 
-func main(){
+func main() {
 	fmt.Println("Приветсвую в NetPulseCore!")
+//	storage.File()
 	Scanner := bufio.NewScanner(os.Stdin)
-	for{
+	for {
 		menu()
 		Scanner.Scan()
 		InputUser := Scanner.Text()
-		switch InputUser{
+		switch InputUser {
 		case "1":
+			// Test Method
+			/*Url := "Google"
+			StCode := 200
+			timeDur :=  40 * time.Millisecond
+			storage.Colector.NewResult(Url, StCode, timeDur)
+			fmt.Println(storage.Colector) */
 			//Метод для пинга
+
 			time.Sleep(1 * time.Second)
 		case "2":
 			//Отчет
@@ -35,5 +44,5 @@ func main(){
 			fmt.Println("Команда не распознана")
 			time.Sleep(1 * time.Second)
 		}
-	}	
+	}
 }
