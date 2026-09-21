@@ -1,7 +1,8 @@
 package main
 
 import (
-//	storage "NetPulse/Storage"
+	//	storage "NetPulse/Storage"
+	core "NetPulse/Core"
 	"bufio"
 	"fmt"
 	"os"
@@ -32,7 +33,7 @@ func main() {
 			storage.Colector.NewResult(Url, StCode, timeDur)
 			fmt.Println(storage.Colector) */
 			//Метод для пинга
-
+			core.Ping("")
 			time.Sleep(1 * time.Second)
 		case "2":
 			//Отчет
