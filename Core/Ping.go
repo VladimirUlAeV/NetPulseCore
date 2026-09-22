@@ -19,7 +19,7 @@ func adressFullOrNot(Url string)(string, error){
 	return Url, nil
 }
 
-func Ping(Url string) (string, int, time.Duration, error) {
+func ping(Url string) (string, int, time.Duration, error) {
 	client := &http.Client{Timeout: 5 * time.Second}
 	fullUrl, err := adressFullOrNot(Url)
 	if err != nil{

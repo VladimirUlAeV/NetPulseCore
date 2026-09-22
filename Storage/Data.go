@@ -1,6 +1,7 @@
 package storage
 
 import (
+	"sync"
 	"log"
 	"os"
 	"time"
@@ -14,10 +15,14 @@ type result struct {
 }
 
 type collector struct{
+	Mu sync.Mutex
 	DataReport []result
 }
 
-var colector = newcollector()
+func PointerColector()(*collector){
+	return Colector
+}
+var Colector = newcollector()
 
 func File(){
 	file, err := os.Create("Resut.txt")
@@ -42,12 +47,14 @@ func newcollector() *collector{
 	}
 }
 
-func (c *collector)NewResult(Url string, StCode int, timeDur time.Duration) {
-c.DataReport = append(colector.DataReport,result{
+func (c *collector)NewResult(Url string, StCode int, timeDur time.Duration, err error) {
+	defer c.Mu.Unlock()
+	c.Mu.Lock()
+	c.DataReport = append(Colector.DataReport,result{
 			URL: Url,
 			StatusCode: StCode,
 			TimeDuration: timeDur,
-			Err: nil,
+			Err: err,
 		})
 }
 

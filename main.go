@@ -1,11 +1,12 @@
 package main
 
 import (
-	//	storage "NetPulse/Storage"
+	storage "NetPulse/Storage"
 	core "NetPulse/Core"
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -17,6 +18,7 @@ func menu() {
 }
 
 func main() {
+	Pointer := storage.PointerColector()
 	fmt.Println("Приветсвую в NetPulseCore!")
 //	storage.File()
 	Scanner := bufio.NewScanner(os.Stdin)
@@ -26,17 +28,18 @@ func main() {
 		InputUser := Scanner.Text()
 		switch InputUser {
 		case "1":
-			// Test Method
-			/*Url := "Google"
-			StCode := 200
-			timeDur :=  40 * time.Millisecond
-			storage.Colector.NewResult(Url, StCode, timeDur)
-			fmt.Println(storage.Colector) */
-			//Метод для пинга
-			core.Ping("")
+			fmt.Print("Введите количество запросов: ")
+			Scanner.Scan()
+			Input := Scanner.Text()
+			HowMany, err := strconv.Atoi(Input)
+			if err != nil{
+				fmt.Println("Ошибка:", err)
+			}
+			core.PingGo(HowMany)
 			time.Sleep(1 * time.Second)
 		case "2":
 			//Отчет
+			fmt.Println(Pointer)
 			time.Sleep(1 * time.Second)
 		case "0":
 			fmt.Println("Спасибо за использование моей программы")
