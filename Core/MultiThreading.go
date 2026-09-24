@@ -2,28 +2,31 @@ package core
 
 import (
 	storage "NetPulse/Storage"
-	"sync"
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
+	"sync"
 )
 
 
 
-func PingGo(HowMany int){
+func PingGo(){
 	Pointer := storage.PointerColector()
 	Scanner := bufio.NewScanner(os.Stdin)
 	var wg sync.WaitGroup
-	for i := 0; i < HowMany ; i++{
+	fmt.Print("Введите адресс или домен: ")
+	Scanner.Scan()
+	UrlText := Scanner.Text()
+	Url := strings.Fields(UrlText)
+	for _, v := range Url{
 		wg.Add(1)
-		fmt.Print("Введите адресс или домен: ")
-		Scanner.Scan()
-		Url := Scanner.Text()
 		go func(u string){
 			defer wg.Done()
-			url, code, timee, err := ping(u) 
+			url, code, timee, err := ping(v) 
 			Pointer.NewResult(url, code, timee, err)
-		}(Url)
-	}
+			}(v)
+		}
 	wg.Wait()
 }
+

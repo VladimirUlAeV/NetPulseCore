@@ -6,7 +6,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strconv"
 	"time"
 )
 
@@ -28,14 +27,7 @@ func main() {
 		InputUser := Scanner.Text()
 		switch InputUser {
 		case "1":
-			fmt.Print("Введите количество запросов: ")
-			Scanner.Scan()
-			Input := Scanner.Text()
-			HowMany, err := strconv.Atoi(Input)
-			if err != nil{
-				fmt.Println("Ошибка:", err)
-			}
-			core.PingGo(HowMany)
+			core.PingGo()
 			time.Sleep(1 * time.Second)
 		case "2":
 			//Отчет

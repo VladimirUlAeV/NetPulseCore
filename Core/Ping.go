@@ -16,6 +16,7 @@ func adressFullOrNot(Url string)(string, error){
 	if !strings.HasPrefix(Url,"https://"){
 		return "https://"+Url, nil
 	}
+	
 	return Url, nil
 }
 
