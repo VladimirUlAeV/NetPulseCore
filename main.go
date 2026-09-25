@@ -17,9 +17,7 @@ func menu() {
 }
 
 func main() {
-	Pointer := storage.PointerColector()
 	fmt.Println("Приветсвую в NetPulseCore!")
-//	storage.File()
 	Scanner := bufio.NewScanner(os.Stdin)
 	for {
 		menu()
@@ -31,7 +29,7 @@ func main() {
 			time.Sleep(1 * time.Second)
 		case "2":
 			//Отчет
-			fmt.Println(Pointer)
+			storage.OpenFile("Result.log")
 			time.Sleep(1 * time.Second)
 		case "0":
 			fmt.Println("Спасибо за использование моей программы")
