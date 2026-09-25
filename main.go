@@ -28,7 +28,6 @@ func main() {
 			core.PingGo()
 			time.Sleep(1 * time.Second)
 		case "2":
-			//Отчет
 			storage.OpenFile("Result.log")
 			time.Sleep(1 * time.Second)
 		case "0":

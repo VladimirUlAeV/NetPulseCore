@@ -12,7 +12,6 @@ import (
 
 
 func PingGo(){
-	Pointer := storage.PointerColector()
 	Scanner := bufio.NewScanner(os.Stdin)
 	var wg sync.WaitGroup
 	fmt.Print("Введите адресс или домен: ")
@@ -24,9 +23,8 @@ func PingGo(){
 		go func(u string){
 			defer wg.Done()
 			url, code, timee, err := ping(v) 
-			Pointer.NewResult(url, code, timee, err)
+			storage.EditLog(url, code, timee, err)
 			}(v)
 		}
 	wg.Wait()
 }
-

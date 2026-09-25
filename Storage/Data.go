@@ -1,51 +1,14 @@
 package storage
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 	"runtime"
 	"sync"
 	"time"
 )
-
-type result struct {
-	URL          string
-	StatusCode   int
-	TimeDuration time.Duration
-	Err error
-}
-
-type collector struct{
-	Mu sync.Mutex
-	DataReport []result
-}
-
-var colector = newcollector()
-
-func newcollector() *collector{
-	return &collector{
-		DataReport: make([]result, 0),
-	}
-}
-
-func PointerColector()(*collector){
-	return colector
-}
-
-func (c *collector)NewResult(Url string, StCode int, timeDur time.Duration, err error) {
-	defer c.Mu.Unlock()
-	c.Mu.Lock()
-	c.DataReport = append(colector.DataReport,result{
-			URL: Url,
-			StatusCode: StCode,
-			TimeDuration: timeDur,
-			Err: err,
-		})
-}
-
-func (c *collector)PrintResult(){
-	
-}
+var Mu sync.Mutex
 
 func createFile(path string)error{
 	file, err := os.Create(path)
@@ -66,7 +29,10 @@ func createOrNot(filename string)bool{
 	return false
 }
 
-func EditLog()error{
+func EditLog(url string, code int, ping time.Duration, errPing error)error{
+	defer Mu.Unlock()
+	Mu.Lock()
+	timestamp := time.Now()
 	filename := "Result.log"
 	if !createOrNot(filename){
 		createFile(filename)
@@ -78,7 +44,13 @@ func EditLog()error{
 	}
 	defer file.Close()
 
-	_, err = file.WriteString(filename + "\n") //реализовать запись
+	_, err = fmt.Fprintf(file,
+		"Запрос на: %s\n"+
+    	"Дата записи: %v\n"+
+    	"Статус запроса: %d\n"+
+    	"Пинг: %v\n"+
+    	"Ошибка: %v\n\n",
+    	url, timestamp, code, ping, errPing,)
 	return err
 }
 
