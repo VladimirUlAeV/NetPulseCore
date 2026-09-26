@@ -30,8 +30,8 @@ func createOrNot(filename string)bool{
 }
 
 func EditLog(url string, code int, ping time.Duration, errPing error)error{
-	defer Mu.Unlock()
 	Mu.Lock()
+	defer Mu.Unlock()
 	timestamp := time.Now()
 	filename := "Result.log"
 	if !createOrNot(filename){

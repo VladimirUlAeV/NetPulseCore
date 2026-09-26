@@ -9,8 +9,6 @@ import (
 	"sync"
 )
 
-
-
 func PingGo(){
 	Scanner := bufio.NewScanner(os.Stdin)
 	var wg sync.WaitGroup
@@ -20,7 +18,7 @@ func PingGo(){
 	Url := strings.Fields(UrlText)
 	for _, v := range Url{
 		wg.Add(1)
-		go func(u string){
+		go func(string){
 			defer wg.Done()
 			url, code, timee, err := ping(v) 
 			storage.EditLog(url, code, timee, err)
